@@ -4,15 +4,17 @@ import { z } from "zod";
 
 export const students = pgTable("students", {
   id: serial("id").primaryKey(),
+  student_id: text("student_id").notNull().unique(),
   name: text("name").notNull(),
-  studentId: text("student_id").notNull().unique(),
   email: text("email").notNull(),
-  program: text("program").notNull().default("Management Engineering"),
-  currentTerm: text("current_term").notNull(),
+  major: text("major").notNull(),
+  specialization: text("specialization").notNull(),
+  career_goal: text("career_goal").notNull(),
+  interest_keywords: json("interest_keywords").$type<string[]>().default([]),
+  term_preference: text("term_preference").notNull(),
+  filters_selected: json("filters_selected").$type<Record<string, any>>().default({}),
+  current_term: text("current_term").notNull(),
   cgpa: real("cgpa").notNull(),
-  interests: json("interests").$type<string[]>().default([]),
-  careerPath: text("career_path"),
-  learningStyle: text("learning_style"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

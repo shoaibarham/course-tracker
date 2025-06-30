@@ -38,15 +38,15 @@ const LEARNING_STYLES = [
 ];
 
 export default function InterestSurvey({ student }: InterestSurveyProps) {
-  const [interests, setInterests] = useState<string[]>(student.interests || []);
-  const [careerPath, setCareerPath] = useState<string>(student.careerPath || "");
-  const [learningStyle, setLearningStyle] = useState<string>(student.learningStyle || "");
+  const [interests, setInterests] = useState<string[]>(student.interest_keywords || []);
+  const [careerPath, setCareerPath] = useState<string>(student.career_goal || "");
+  const [learningStyle, setLearningStyle] = useState<string>(student.term_preference || "");
   
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const updateStudentMutation = useMutation({
-    mutationFn: async (data: { interests: string[], careerPath: string, learningStyle: string }) => {
+    mutationFn: async (data: { interest_keywords: string[], career_goal: string, term_preference: string }) => {
       await apiRequest("PUT", `/api/students/${student.id}`, data);
     },
     onSuccess: () => {
@@ -76,9 +76,9 @@ export default function InterestSurvey({ student }: InterestSurveyProps) {
 
   const handleSubmit = () => {
     updateStudentMutation.mutate({
-      interests,
-      careerPath,
-      learningStyle,
+      interest_keywords: interests,
+      career_goal: careerPath,
+      term_preference: learningStyle,
     });
   };
 
@@ -116,7 +116,7 @@ export default function InterestSurvey({ student }: InterestSurveyProps) {
               </SelectTrigger>
               <SelectContent>
                 {CAREER_PATHS.map((path) => (
-                  <SelectItem key={path} value={path}>
+                  <SelectItem key={path} value={path || ""}>
                     {path}
                   </SelectItem>
                 ))}

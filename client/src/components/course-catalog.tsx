@@ -15,8 +15,13 @@ export default function CourseCatalog() {
   const [aiOptionList, setAIOptionList] = useState("");
   const [termOffered, setTermOffered] = useState("");
 
-  const { data: courses, isLoading } = useQuery({
-    queryKey: ["/api/courses", { query: searchQuery, department, aiOptionList, termOffered }],
+  const { data: courses = [], isLoading } = useQuery({
+    queryKey: ["/api/courses/search", { 
+      query: searchQuery, 
+      department: department === "all" ? "" : department, 
+      ai_option_list: aiOptionList === "all" ? "" : aiOptionList, 
+      term_offered: termOffered === "all" ? "" : termOffered 
+    }],
   });
 
   const queryClient = useQueryClient();
@@ -99,7 +104,7 @@ export default function CourseCatalog() {
                 <SelectValue placeholder="All Terms" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Terms</SelectItem>
+                <SelectItem value="all">All Terms</SelectItem>
                 <SelectItem value="Spring">Spring 2025</SelectItem>
                 <SelectItem value="Fall">Fall 2025</SelectItem>
                 <SelectItem value="Winter">Winter 2026</SelectItem>
@@ -113,7 +118,7 @@ export default function CourseCatalog() {
                 <SelectValue placeholder="All Lists" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Lists</SelectItem>
+                <SelectItem value="all">All Lists</SelectItem>
                 <SelectItem value="list1">List 1 (Society/Ethics)</SelectItem>
                 <SelectItem value="list2">List 2 (Core AI/ML)</SelectItem>
                 <SelectItem value="list3">List 3 (Advanced)</SelectItem>
@@ -127,7 +132,7 @@ export default function CourseCatalog() {
                 <SelectValue placeholder="All Departments" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Departments</SelectItem>
+                <SelectItem value="all">All Departments</SelectItem>
                 <SelectItem value="CS">Computer Science (CS)</SelectItem>
                 <SelectItem value="SYDE">Systems Design (SYDE)</SelectItem>
                 <SelectItem value="STAT">Statistics (STAT)</SelectItem>
@@ -170,7 +175,7 @@ export default function CourseCatalog() {
                       <TableCell>{course.credits}</TableCell>
                       <TableCell>{getAIOptionBadge(course.aiOptionList)}</TableCell>
                       <TableCell className="text-sm text-gray-500">
-                        {course.prerequisites.length > 0 ? course.prerequisites.join(", ") : "None"}
+                        {course.prerequisites && course.prerequisites.length > 0 ? course.prerequisites.join(", ") : "None"}
                       </TableCell>
                       <TableCell>{getMatchBadge(matchScore)}</TableCell>
                       <TableCell>

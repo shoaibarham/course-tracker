@@ -10,7 +10,7 @@ interface AIOptionTrackerProps {
 
 export default function AIOptionTracker({ studentId }: AIOptionTrackerProps) {
   const { data: progress, isLoading } = useQuery({
-    queryKey: [`/api/students/${studentId}/ai-option-progress`],
+    queryKey: [`/api/ai-option-progress/${studentId}`],
   });
 
   if (isLoading) {

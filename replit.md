@@ -17,12 +17,12 @@ The application follows a modern full-stack architecture with clear separation b
 - **Component Library**: Radix UI primitives with custom styling
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js
-- **Language**: TypeScript with ES modules
-- **Database ORM**: Drizzle ORM with PostgreSQL dialect
-- **Database Provider**: Neon Database (@neondatabase/serverless)
-- **Session Management**: PostgreSQL-based sessions (connect-pg-simple)
-- **Development**: Hot reload with Vite middleware integration
+- **Runtime**: Python 3.11 with FastAPI
+- **Language**: Python with Pydantic models
+- **Machine Learning**: scikit-learn with TF-IDF vectorization for course recommendations
+- **Data Storage**: In-memory storage with JSON-like structures
+- **API Framework**: FastAPI with automatic OpenAPI documentation
+- **CORS**: Enabled for frontend integration
 
 ## Key Components
 

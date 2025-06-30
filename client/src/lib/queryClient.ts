@@ -29,7 +29,25 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    let url = queryKey[0] as string;
+    
+    // Handle query parameters for the Python FastAPI backend
+    if (queryKey.length > 1 && queryKey[1]) {
+      const params = new URLSearchParams();
+      const filters = queryKey[1] as Record<string, string>;
+      
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value && value !== '') {
+          params.append(key, value);
+        }
+      });
+      
+      if (params.toString()) {
+        url += '?' + params.toString();
+      }
+    }
+    
+    const res = await fetch(url, {
       credentials: "include",
     });
 

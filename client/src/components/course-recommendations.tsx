@@ -11,8 +11,8 @@ interface CourseRecommendationsProps {
 }
 
 export default function CourseRecommendations({ studentId }: CourseRecommendationsProps) {
-  const { data: recommendations, isLoading } = useQuery({
-    queryKey: [`/api/students/${studentId}/recommendations`],
+  const { data: recommendations = [], isLoading } = useQuery({
+    queryKey: [`/api/recommendations/${studentId}`],
   });
 
   const queryClient = useQueryClient();
